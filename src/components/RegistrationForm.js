@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   DatePickerAndroid
 } from 'react-native';
-import Title from './Title';
 import validate from '../validations/validate';
 import { DatePickerDialog } from 'react-native-datepicker-dialog';
 import moment from 'moment';
@@ -168,10 +167,6 @@ export default class RegistrationForm extends Component {
                                    }
                             }/>
           <Text style={styles.error}>{this.state.confirmPasswordErrorMessage}</Text>
-        </View>
-        <View>
-          <Title text="hello0000000000000000"/>
-          <Text style={styles.error}>{this.state.titleErrorMessage}</Text>
         </View>
         </ScrollView>
       </View>
