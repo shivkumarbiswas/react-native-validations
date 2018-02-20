@@ -1,15 +1,29 @@
 import validation from 'validate.js';
-import validationRules from './validationRules';
+import validationRules from './common.validationRules';
+import studentValidationRules from './student.validationRules';
+
+const student = studentValidationRules.student;
 
 export default function validate(fieldName, value, options) {
   
-    const formValues = {}
-    formValues[fieldName] = value;
+    let items = fieldName.split('.');
+    const formValues = {};
+    const formFields = {};
 
-    const formFields = {}
-    formFields[fieldName] = validationRules[fieldName];
+    if(items.length > 1) {     
+        
+        if(items[0] === 'student') {
+            fieldName = items[1];
+            formValues[items[1]] = value;
+            formFields[items[1]] = student[items[1]];           
+       }
+    }
+    else {
+        formValues[fieldName] = value;
+        formFields[fieldName] = validationRules[fieldName];
+    }
 
-    if(options){
+    if(options) {
         formValues[options.key] = options.value;
     }
 

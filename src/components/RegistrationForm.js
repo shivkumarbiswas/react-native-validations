@@ -42,11 +42,25 @@ export default class RegistrationForm extends Component {
       password:'',
       passwordErrorMessage:'',
       confirmPassword:'',
-      confirmPasswordErrorMessage:''
+      confirmPasswordErrorMessage:'',
+      student: {
+        firstName: "",
+        firstNameErrorMessage: "",
+      }
     }
 
     this.onDatePickedFunction = this.onDatePickedFunction.bind(this);
     this.onDateofJoiningPickedFunction = this.onDateofJoiningPickedFunction.bind(this);
+  }
+
+  validate(fieldName, fieldValue) {
+
+    var errorMessage = validate(fieldName, fieldValue);
+
+    if(fieldName === 'firstName')
+      this.setState({firstNameErrorMessage: errorMessage});
+    else if(fieldName === 'student.firstName')
+      this.setState({student: {firstNameErrorMessage: errorMessage}});
   }
 
   /**
@@ -94,13 +108,16 @@ export default class RegistrationForm extends Component {
           <Text>Registration:</Text>
         </View>
         <View>
-          <TextInput style={styles.input} placeholder="First Name"  onChangeText={value => this.setState({firstName: value})}
-                     onBlur={() => {
-                                      this.setState({firstNameErrorMessage: validate('firstName', this.state.firstName)})
-                                   }
-                            }
+          <TextInput style={styles.input} placeholder="First Name" onChangeText={value => this.setState({firstName: value})}
+                     onBlur={()=>this.validate('firstName', this.state.firstName)}
           />
           <Text style={styles.error}>{this.state.firstNameErrorMessage}</Text>
+        </View>
+        <View>
+          <TextInput style={styles.input} placeholder="Student First Name" onChangeText={value => this.setState({student: {firstName: value}})}
+                     onBlur={()=>this.validate('student.firstName', this.state.student.firstName)}
+          />
+          <Text style={styles.error}>{this.state.student.firstNameErrorMessage}</Text>
         </View>
         <View>
           <TextInput style={styles.input} placeholder="Last Name" onChangeText={value => this.setState({firstName: value})}

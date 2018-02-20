@@ -52901,17 +52901,13 @@ __d(function (global, require, module, exports, _dependencyMap) {
 
   var _reactNative = require(_dependencyMap[1], "react-native");
 
-  var _Title = require(_dependencyMap[2], "./Title");
+  var _validate2 = require(_dependencyMap[2], "../validations/validate");
 
-  var _Title2 = babelHelpers.interopRequireDefault(_Title);
+  var _validate3 = babelHelpers.interopRequireDefault(_validate2);
 
-  var _validate = require(_dependencyMap[3], "../validations/validate");
+  var _reactNativeDatepickerDialog = require(_dependencyMap[3], "react-native-datepicker-dialog");
 
-  var _validate2 = babelHelpers.interopRequireDefault(_validate);
-
-  var _reactNativeDatepickerDialog = require(_dependencyMap[4], "react-native-datepicker-dialog");
-
-  var _moment = require(_dependencyMap[5], "moment");
+  var _moment = require(_dependencyMap[4], "moment");
 
   var _moment2 = babelHelpers.interopRequireDefault(_moment);
 
@@ -52945,7 +52941,11 @@ __d(function (global, require, module, exports, _dependencyMap) {
         password: '',
         passwordErrorMessage: '',
         confirmPassword: '',
-        confirmPasswordErrorMessage: ''
+        confirmPasswordErrorMessage: '',
+        student: {
+          firstName: "",
+          firstNameErrorMessage: ""
+        }
       };
       _this.onDatePickedFunction = _this.onDatePickedFunction.bind(_this);
       _this.onDateofJoiningPickedFunction = _this.onDateofJoiningPickedFunction.bind(_this);
@@ -52953,6 +52953,18 @@ __d(function (global, require, module, exports, _dependencyMap) {
     }
 
     babelHelpers.createClass(RegistrationForm, [{
+      key: "validate",
+      value: function validate(fieldName, fieldValue) {
+        var errorMessage = (0, _validate3.default)(fieldName, fieldValue);
+        if (fieldName === 'firstName') this.setState({
+          firstNameErrorMessage: errorMessage
+        });else if (fieldName === 'student.firstName') this.setState({
+          student: {
+            firstNameErrorMessage: errorMessage
+          }
+        });
+      }
+    }, {
       key: "DatePickerMainFunctionCall",
       value: function DatePickerMainFunctionCall() {
         this.refs.DatePickerDialog.open({
@@ -52971,7 +52983,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
       value: function onDatePickedFunction(date) {
         console.log(date);
         this.setState({
-          dobErrorMessage: (0, _validate2.default)('dob', (0, _moment2.default)(date).format('YYYY-MM-DD'))
+          dobErrorMessage: (0, _validate3.default)('dob', (0, _moment2.default)(date).format('YYYY-MM-DD'))
         });
         this.setState({
           dob: date,
@@ -52982,7 +52994,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
       key: "onDateofJoiningPickedFunction",
       value: function onDateofJoiningPickedFunction(date) {
         this.setState({
-          dojErrorMessage: (0, _validate2.default)('doj', (0, _moment2.default)(date).format('YYYY-MM-DD'))
+          dojErrorMessage: (0, _validate3.default)('doj', (0, _moment2.default)(date).format('YYYY-MM-DD'))
         });
         this.setState({
           doj: date,
@@ -53000,7 +53012,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
             style: styles.container,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 92
+              lineNumber: 105
             }
           },
           _react2.default.createElement(
@@ -53008,7 +53020,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
             {
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 93
+                lineNumber: 106
               }
             },
             _react2.default.createElement(
@@ -53016,7 +53028,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
               {
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 94
+                  lineNumber: 107
                 }
               },
               _react2.default.createElement(
@@ -53024,7 +53036,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                 {
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 95
+                    lineNumber: 108
                   }
                 },
                 "Registration:"
@@ -53035,7 +53047,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
               {
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 97
+                  lineNumber: 110
                 }
               },
               _react2.default.createElement(_reactNative.TextInput, {
@@ -53047,13 +53059,11 @@ __d(function (global, require, module, exports, _dependencyMap) {
                   });
                 },
                 onBlur: function onBlur() {
-                  _this2.setState({
-                    firstNameErrorMessage: (0, _validate2.default)('firstName', _this2.state.firstName)
-                  });
+                  return _this2.validate('firstName', _this2.state.firstName);
                 },
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 98
+                  lineNumber: 111
                 }
               }),
               _react2.default.createElement(
@@ -53062,7 +53072,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                   style: styles.error,
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 104
+                    lineNumber: 114
                   }
                 },
                 this.state.firstNameErrorMessage
@@ -53073,7 +53083,45 @@ __d(function (global, require, module, exports, _dependencyMap) {
               {
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 106
+                  lineNumber: 116
+                }
+              },
+              _react2.default.createElement(_reactNative.TextInput, {
+                style: styles.input,
+                placeholder: "Student First Name",
+                onChangeText: function onChangeText(value) {
+                  return _this2.setState({
+                    student: {
+                      firstName: value
+                    }
+                  });
+                },
+                onBlur: function onBlur() {
+                  return _this2.validate('student.firstName', _this2.state.student.firstName);
+                },
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 117
+                }
+              }),
+              _react2.default.createElement(
+                _reactNative.Text,
+                {
+                  style: styles.error,
+                  __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 120
+                  }
+                },
+                this.state.student.firstNameErrorMessage
+              )
+            ),
+            _react2.default.createElement(
+              _reactNative.View,
+              {
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 122
                 }
               },
               _react2.default.createElement(_reactNative.TextInput, {
@@ -53086,12 +53134,12 @@ __d(function (global, require, module, exports, _dependencyMap) {
                 },
                 onBlur: function onBlur() {
                   _this2.setState({
-                    lastNameErrorMessage: (0, _validate2.default)('lastName', _this2.state.firstName)
+                    lastNameErrorMessage: (0, _validate3.default)('lastName', _this2.state.firstName)
                   });
                 },
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 107
+                  lineNumber: 123
                 }
               }),
               _react2.default.createElement(
@@ -53100,7 +53148,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                   style: styles.error,
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 112
+                    lineNumber: 128
                   }
                 },
                 this.state.lastNameErrorMessage
@@ -53111,7 +53159,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
               {
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 114
+                  lineNumber: 130
                 }
               },
               _react2.default.createElement(
@@ -53120,7 +53168,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                   onPress: this.DatePickerMainFunctionCall.bind(this),
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 115
+                    lineNumber: 131
                   }
                 },
                 _react2.default.createElement(
@@ -53129,7 +53177,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                     style: styles.datePickerBox,
                     __source: {
                       fileName: _jsxFileName,
-                      lineNumber: 116
+                      lineNumber: 132
                     }
                   },
                   _react2.default.createElement(
@@ -53138,7 +53186,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                       style: styles.datePickerText,
                       __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 117
+                        lineNumber: 133
                       }
                     },
                     this.state.DateText
@@ -53150,7 +53198,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                 onDatePicked: this.onDatePickedFunction,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 120
+                  lineNumber: 136
                 }
               }),
               _react2.default.createElement(
@@ -53159,7 +53207,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                   style: styles.error,
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 121
+                    lineNumber: 137
                   }
                 },
                 this.state.dobErrorMessage
@@ -53170,7 +53218,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
               {
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 123
+                  lineNumber: 139
                 }
               },
               _react2.default.createElement(
@@ -53179,7 +53227,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                   onPress: this.DateofJoiningPickerMainFunctionCall.bind(this),
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 124
+                    lineNumber: 140
                   }
                 },
                 _react2.default.createElement(
@@ -53188,7 +53236,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                     style: styles.datePickerBox,
                     __source: {
                       fileName: _jsxFileName,
-                      lineNumber: 125
+                      lineNumber: 141
                     }
                   },
                   _react2.default.createElement(
@@ -53197,7 +53245,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                       style: styles.datePickerText,
                       __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 126
+                        lineNumber: 142
                       }
                     },
                     this.state.DateofJoiningText
@@ -53209,83 +53257,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                 onDatePicked: this.onDateofJoiningPickedFunction,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 129
-                }
-              }),
-              _react2.default.createElement(
-                _reactNative.Text,
-                {
-                  style: styles.error,
-                  __source: {
-                    fileName: _jsxFileName,
-                    lineNumber: 130
-                  }
-                },
-                this.state.dojErrorMessage
-              )
-            ),
-            _react2.default.createElement(
-              _reactNative.View,
-              {
-                __source: {
-                  fileName: _jsxFileName,
-                  lineNumber: 132
-                }
-              },
-              _react2.default.createElement(_reactNative.TextInput, {
-                style: styles.input,
-                placeholder: "Contact Number",
-                onChangeText: function onChangeText(value) {
-                  return _this2.setState({
-                    contactNumber: value
-                  });
-                },
-                onBlur: function onBlur() {
-                  _this2.setState({
-                    contactNumberErrorMessage: (0, _validate2.default)('contactNumber', _this2.state.contactNumber)
-                  });
-                },
-                __source: {
-                  fileName: _jsxFileName,
-                  lineNumber: 133
-                }
-              }),
-              _react2.default.createElement(
-                _reactNative.Text,
-                {
-                  style: styles.error,
-                  __source: {
-                    fileName: _jsxFileName,
-                    lineNumber: 138
-                  }
-                },
-                this.state.contactNumberErrorMessage
-              )
-            ),
-            _react2.default.createElement(
-              _reactNative.View,
-              {
-                __source: {
-                  fileName: _jsxFileName,
-                  lineNumber: 140
-                }
-              },
-              _react2.default.createElement(_reactNative.TextInput, {
-                style: styles.input,
-                placeholder: "Aadhar Number",
-                onChangeText: function onChangeText(value) {
-                  return _this2.setState({
-                    aadharNumber: value
-                  });
-                },
-                onBlur: function onBlur() {
-                  _this2.setState({
-                    aadharNumberErrorMessage: (0, _validate2.default)('aadharNumber', _this2.state.aadharNumber)
-                  });
-                },
-                __source: {
-                  fileName: _jsxFileName,
-                  lineNumber: 141
+                  lineNumber: 145
                 }
               }),
               _react2.default.createElement(
@@ -53297,7 +53269,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                     lineNumber: 146
                   }
                 },
-                this.state.aadharNumberErrorMessage
+                this.state.dojErrorMessage
               )
             ),
             _react2.default.createElement(
@@ -53310,15 +53282,15 @@ __d(function (global, require, module, exports, _dependencyMap) {
               },
               _react2.default.createElement(_reactNative.TextInput, {
                 style: styles.input,
-                placeholder: "Email",
+                placeholder: "Contact Number",
                 onChangeText: function onChangeText(value) {
                   return _this2.setState({
-                    email: value
+                    contactNumber: value
                   });
                 },
                 onBlur: function onBlur() {
                   _this2.setState({
-                    emailErrorMessage: (0, _validate2.default)('email', _this2.state.email)
+                    contactNumberErrorMessage: (0, _validate3.default)('contactNumber', _this2.state.contactNumber)
                   });
                 },
                 __source: {
@@ -53335,7 +53307,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                     lineNumber: 154
                   }
                 },
-                this.state.emailErrorMessage
+                this.state.contactNumberErrorMessage
               )
             ),
             _react2.default.createElement(
@@ -53348,15 +53320,15 @@ __d(function (global, require, module, exports, _dependencyMap) {
               },
               _react2.default.createElement(_reactNative.TextInput, {
                 style: styles.input,
-                placeholder: "Password",
+                placeholder: "Aadhar Number",
                 onChangeText: function onChangeText(value) {
                   return _this2.setState({
-                    password: value
+                    aadharNumber: value
                   });
                 },
                 onBlur: function onBlur() {
                   _this2.setState({
-                    passwordErrorMessage: (0, _validate2.default)('password', _this2.state.password)
+                    aadharNumberErrorMessage: (0, _validate3.default)('aadharNumber', _this2.state.aadharNumber)
                   });
                 },
                 __source: {
@@ -53373,7 +53345,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                     lineNumber: 162
                   }
                 },
-                this.state.passwordErrorMessage
+                this.state.aadharNumberErrorMessage
               )
             ),
             _react2.default.createElement(
@@ -53386,18 +53358,15 @@ __d(function (global, require, module, exports, _dependencyMap) {
               },
               _react2.default.createElement(_reactNative.TextInput, {
                 style: styles.input,
-                placeholder: "Confirm Password",
+                placeholder: "Email",
                 onChangeText: function onChangeText(value) {
                   return _this2.setState({
-                    confirmPassword: value
+                    email: value
                   });
                 },
                 onBlur: function onBlur() {
                   _this2.setState({
-                    confirmPasswordErrorMessage: (0, _validate2.default)('confirmPassword', _this2.state.confirmPassword, {
-                      key: 'password',
-                      value: _this2.state.password
-                    })
+                    emailErrorMessage: (0, _validate3.default)('email', _this2.state.email)
                   });
                 },
                 __source: {
@@ -53414,7 +53383,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
                     lineNumber: 170
                   }
                 },
-                this.state.confirmPasswordErrorMessage
+                this.state.emailErrorMessage
               )
             ),
             _react2.default.createElement(
@@ -53425,8 +53394,19 @@ __d(function (global, require, module, exports, _dependencyMap) {
                   lineNumber: 172
                 }
               },
-              _react2.default.createElement(_Title2.default, {
-                text: "hello",
+              _react2.default.createElement(_reactNative.TextInput, {
+                style: styles.input,
+                placeholder: "Password",
+                onChangeText: function onChangeText(value) {
+                  return _this2.setState({
+                    password: value
+                  });
+                },
+                onBlur: function onBlur() {
+                  _this2.setState({
+                    passwordErrorMessage: (0, _validate3.default)('password', _this2.state.password)
+                  });
+                },
                 __source: {
                   fileName: _jsxFileName,
                   lineNumber: 173
@@ -53438,10 +53418,51 @@ __d(function (global, require, module, exports, _dependencyMap) {
                   style: styles.error,
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 174
+                    lineNumber: 178
                   }
                 },
-                this.state.titleErrorMessage
+                this.state.passwordErrorMessage
+              )
+            ),
+            _react2.default.createElement(
+              _reactNative.View,
+              {
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 180
+                }
+              },
+              _react2.default.createElement(_reactNative.TextInput, {
+                style: styles.input,
+                placeholder: "Confirm Password",
+                onChangeText: function onChangeText(value) {
+                  return _this2.setState({
+                    confirmPassword: value
+                  });
+                },
+                onBlur: function onBlur() {
+                  _this2.setState({
+                    confirmPasswordErrorMessage: (0, _validate3.default)('confirmPassword', _this2.state.confirmPassword, {
+                      key: 'password',
+                      value: _this2.state.password
+                    })
+                  });
+                },
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 181
+                }
+              }),
+              _react2.default.createElement(
+                _reactNative.Text,
+                {
+                  style: styles.error,
+                  __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 186
+                  }
+                },
+                this.state.confirmPasswordErrorMessage
               )
             )
           )
@@ -53482,77 +53503,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
       color: '#000'
     }
   });
-},333,[108,12,334,335,410,338],"validationexample/src/components/RegistrationForm.js");
-__d(function (global, require, module, exports, _dependencyMap) {
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    var _jsxFileName = "C:\\Projects\\validationexample\\src\\components\\Title.js";
-
-    var _react = require(_dependencyMap[0], "react");
-
-    var _react2 = babelHelpers.interopRequireDefault(_react);
-
-    var _reactNative = require(_dependencyMap[1], "react-native");
-
-    var _propTypes = require(_dependencyMap[2], "prop-types");
-
-    var _propTypes2 = babelHelpers.interopRequireDefault(_propTypes);
-
-    var Title = function (_Component) {
-        babelHelpers.inherits(Title, _Component);
-
-        function Title(props) {
-            babelHelpers.classCallCheck(this, Title);
-            return babelHelpers.possibleConstructorReturn(this, (Title.__proto__ || Object.getPrototypeOf(Title)).call(this, props));
-        }
-
-        babelHelpers.createClass(Title, [{
-            key: "render",
-            value: function render() {
-                return _react2.default.createElement(
-                    _reactNative.View,
-                    {
-                        __source: {
-                            fileName: _jsxFileName,
-                            lineNumber: 16
-                        }
-                    },
-                    _react2.default.createElement(
-                        _reactNative.Text,
-                        {
-                            __source: {
-                                fileName: _jsxFileName,
-                                lineNumber: 17
-                            }
-                        },
-                        this.props.text
-                    )
-                );
-            }
-        }]);
-        return Title;
-    }(_react.Component);
-
-    exports.default = Title;
-    Title.propTypes = {
-        text: _propTypes2.default.string.isRequired
-    };
-
-    function textLength(props, propName, componentName) {
-        componentName = componentName || 'ANONYMOUS';
-
-        if (props[propName]) {
-            var value = props[propName];
-
-            if (typeof value === 'string') {
-                return value.length <= 8 ? null : new Error(propName + ' in ' + componentName + " is longer than 8 characters");
-            }
-        }
-
-        return null;
-    }
-},334,[108,12,127],"validationexample/src/components/Title.js");
+},333,[108,12,334,411,338],"validationexample/src/components/RegistrationForm.js");
 __d(function (global, require, module, exports, _dependencyMap) {
     Object.defineProperty(exports, "__esModule", {
         value: true
@@ -53563,15 +53514,31 @@ __d(function (global, require, module, exports, _dependencyMap) {
 
     var _validate2 = babelHelpers.interopRequireDefault(_validate);
 
-    var _validationRules = require(_dependencyMap[1], "./validationRules");
+    var _common = require(_dependencyMap[1], "./common.validationRules");
 
-    var _validationRules2 = babelHelpers.interopRequireDefault(_validationRules);
+    var _common2 = babelHelpers.interopRequireDefault(_common);
+
+    var _student = require(_dependencyMap[2], "./student.validationRules");
+
+    var _student2 = babelHelpers.interopRequireDefault(_student);
+
+    var student = _student2.default.student;
 
     function validate(fieldName, value, options) {
+        var items = fieldName.split('.');
         var formValues = {};
-        formValues[fieldName] = value;
         var formFields = {};
-        formFields[fieldName] = _validationRules2.default[fieldName];
+
+        if (items.length > 1) {
+            if (items[0] === 'student') {
+                fieldName = items[1];
+                formValues[items[1]] = value;
+                formFields[items[1]] = student[items[1]];
+            }
+        } else {
+            formValues[fieldName] = value;
+            formFields[fieldName] = _common2.default[fieldName];
+        }
 
         if (options) {
             formValues[options.key] = options.value;
@@ -53586,7 +53553,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
 
         return null;
     }
-},335,[336,337],"validationexample/src/validations/validate.js");
+},334,[335,336,410],"validationexample/src/validations/validate.js");
 __d(function (global, require, module, exports, _dependencyMap) {
   (function (exports, module, define) {
     "use strict";
@@ -54587,15 +54554,15 @@ __d(function (global, require, module, exports, _dependencyMap) {
     };
     validate.exposeModule(validate, this, exports, module, define);
   }).call(this, typeof exports !== 'undefined' ? exports : null, typeof module !== 'undefined' ? module : null, typeof define !== 'undefined' ? define : null);
-},336,[],"validate.js/validate.js");
+},335,[],"validate.js/validate.js");
 __d(function (global, require, module, exports, _dependencyMap) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _validate = require(_dependencyMap[0], "validate.js");
+	var _custom = require(_dependencyMap[0], "./custom.validationRules");
 
-	var _validate2 = babelHelpers.interopRequireDefault(_validate);
+	var _custom2 = babelHelpers.interopRequireDefault(_custom);
 
 	var _moment = require(_dependencyMap[1], "moment");
 
@@ -54604,41 +54571,6 @@ __d(function (global, require, module, exports, _dependencyMap) {
 	var _validator = require(_dependencyMap[2], "validator");
 
 	var _validator2 = babelHelpers.interopRequireDefault(_validator);
-
-	_validate2.default.extend(_validate2.default.validators.datetime, {
-		parse: function parse(value, options) {
-			return +_moment2.default.utc(value);
-		},
-		format: function format(value, options) {
-			var format = options.dateOnly ? "YYYY-MM-DD" : "YYYY-MM-DD hh:mm:ss";
-			return _moment2.default.utc(value).format(format);
-		}
-	});
-
-	_validate2.default.validators.isMobilePhone = function (value, options, key, attributes, globalOptions) {
-		if (value && !_validator2.default.isMobilePhone(value, 'en-IN')) {
-			return _validate2.default.format("^%{field} has invalid value %{fieldValue}", {
-				field: key,
-				fieldValue: value
-			});
-		}
-
-		return null;
-	};
-
-	_validate2.default.validators.isAadharNumber = function (value, options, key, attributes, globalOptions) {
-		if (value && !_validator2.default.isNumeric(value) && !_validator2.default.isLength(value, {
-			min: 12,
-			max: 12
-		})) {
-			return _validate2.default.format("^%{field} has invalid value %{fieldValue}", {
-				field: key,
-				fieldValue: value
-			});
-		}
-
-		return null;
-	};
 
 	var validationRules = {
 		firstName: {
@@ -54649,7 +54581,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
 			format: {
 				pattern: /^[A-Za-z\s]+$/,
 				message: function message(value, attribute, validatorOptions, attributes, globalOptions) {
-					return _validate2.default.format("^%{field} has invalid value %{fieldValue}", {
+					return _custom2.default.format("^%{field} has invalid value %{fieldValue}", {
 						field: attribute,
 						fieldValue: value
 					});
@@ -54664,7 +54596,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
 			format: {
 				pattern: /^[A-Za-z\s]+$/,
 				message: function message(value, attribute, validatorOptions, attributes, globalOptions) {
-					return _validate2.default.format("^%{field} has invalid value %{fieldValue}", {
+					return _custom2.default.format("^%{field} has invalid value %{fieldValue}", {
 						field: attribute,
 						fieldValue: value
 					});
@@ -54736,7 +54668,72 @@ __d(function (global, require, module, exports, _dependencyMap) {
 		}
 	};
 	exports.default = validationRules;
-},337,[336,338,339],"validationexample/src/validations/validationRules.js");
+},336,[337,338,339],"validationexample/src/validations/common.validationRules.js");
+__d(function (global, require, module, exports, _dependencyMap) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _validate = require(_dependencyMap[0], "validate.js");
+
+	var _validate2 = babelHelpers.interopRequireDefault(_validate);
+
+	var _moment = require(_dependencyMap[1], "moment");
+
+	var _moment2 = babelHelpers.interopRequireDefault(_moment);
+
+	var _validator = require(_dependencyMap[2], "validator");
+
+	var _validator2 = babelHelpers.interopRequireDefault(_validator);
+
+	_validate2.default.extend(_validate2.default.validators.datetime, {
+		parse: function parse(value, options) {
+			return +_moment2.default.utc(value);
+		},
+		format: function format(value, options) {
+			var format = options.dateOnly ? "YYYY-MM-DD" : "YYYY-MM-DD hh:mm:ss";
+			return _moment2.default.utc(value).format(format);
+		}
+	});
+
+	_validate2.default.validators.isMobilePhone = function (value, options, key, attributes, globalOptions) {
+		if (value && !_validator2.default.isMobilePhone(value, 'en-IN')) {
+			return _validate2.default.format("^%{field} has invalid value %{fieldValue}", {
+				field: key,
+				fieldValue: value
+			});
+		}
+
+		return null;
+	};
+
+	_validate2.default.validators.isAadharNumber = function (value, options, key, attributes, globalOptions) {
+		if (value && (!_validator2.default.isNumeric(value) || !_validator2.default.isLength(value, {
+			min: 12,
+			max: 12
+		}))) {
+			return _validate2.default.format("^%{field} has invalid value %{fieldValue}", {
+				field: key,
+				fieldValue: value
+			});
+		}
+
+		return null;
+	};
+
+	_validate2.default.validators.minLength = function (value, options, key, attributes, globalOptions) {
+		if (value && !_validator2.default.isLength(value, {
+			min: 3,
+			max: 12
+		})) {
+			return options.message;
+		}
+
+		return null;
+	};
+
+	exports.default = _validate2.default;
+},337,[335,338,339],"validationexample/src/validations/custom.validationRules.js");
 __d(function (global, require, module, exports, _dependencyMap) {
     ;
 
@@ -62060,6 +62057,47 @@ __d(function (global, require, module, exports, _dependencyMap) {
   module.exports = exports['default'];
 },409,[350],"validator/lib/normalizeEmail.js");
 __d(function (global, require, module, exports, _dependencyMap) {
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    var _custom = require(_dependencyMap[0], "./custom.validationRules");
+
+    var _custom2 = babelHelpers.interopRequireDefault(_custom);
+
+    var _moment = require(_dependencyMap[1], "moment");
+
+    var _moment2 = babelHelpers.interopRequireDefault(_moment);
+
+    var _validator = require(_dependencyMap[2], "validator");
+
+    var _validator2 = babelHelpers.interopRequireDefault(_validator);
+
+    var studentValidationRules = {
+        student: {
+            firstName: {
+                presence: {
+                    allowEmpty: false,
+                    message: '^Student First Name should not be blank'
+                },
+                format: {
+                    pattern: /^[A-Za-z\s]+$/,
+                    message: function message(value, attribute, validatorOptions, attributes, globalOptions) {
+                        return _custom2.default.format("^Student %{field} has invalid value %{fieldValue}", {
+                            field: attribute,
+                            fieldValue: value
+                        });
+                    }
+                },
+                minLength: {
+                    message: '^Length is invalid'
+                }
+            }
+        }
+    };
+    exports.default = studentValidationRules;
+},410,[337,338,339],"validationexample/src/validations/student.validationRules.js");
+__d(function (global, require, module, exports, _dependencyMap) {
   var _DatePickerDialog = require(_dependencyMap[0], "./lib/datepicker/DatePickerDialog");
 
   var _DatePickerDialog2 = babelHelpers.interopRequireDefault(_DatePickerDialog);
@@ -62067,7 +62105,7 @@ __d(function (global, require, module, exports, _dependencyMap) {
   module.exports = {
     DatePickerDialog: _DatePickerDialog2.default
   };
-},410,[411],"react-native-datepicker-dialog/main-index.js");
+},411,[412],"react-native-datepicker-dialog/main-index.js");
 __d(function (global, require, module, exports, _dependencyMap) {
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -62162,6 +62200,6 @@ __d(function (global, require, module, exports, _dependencyMap) {
       right: 0
     }
   });
-},411,[108,127,12],"react-native-datepicker-dialog/lib/datepicker/DatePickerDialog.android.js");
+},412,[108,127,12],"react-native-datepicker-dialog/lib/datepicker/DatePickerDialog.android.js");
 require(23);
 require(11);
